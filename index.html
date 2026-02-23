@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sync | 메신저봇R 코드 판매</title>
+<title>Sync Security</title>
 <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Pretendard',sans-serif;}
@@ -14,87 +14,63 @@ nav a{margin-left:20px;text-decoration:none;color:#ccc;transition:0.3s;}
 nav a:hover{color:#00f2ff;}
 .hero{height:90vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
 .hero h1{font-size:48px;margin-bottom:20px;}
-.hero p{font-size:18px;color:#aaa;margin-bottom:30px;}
 .btn{padding:15px 35px;background:#00f2ff;color:black;border:none;border-radius:8px;font-weight:600;cursor:pointer;transition:0.3s;}
 .btn:hover{transform:scale(1.05);}
 .section{padding:80px 10%;text-align:center;}
 .section h2{font-size:32px;margin-bottom:40px;}
 .cards{display:flex;flex-wrap:wrap;justify-content:center;gap:30px;}
-.card{background:#1e293b;padding:30px;border-radius:12px;width:300px;transition:0.3s;}
+.card{background:#1e293b;padding:40px;border-radius:12px;width:300px;transition:0.3s;}
 .card:hover{transform:translateY(-10px);}
-.price{font-size:28px;margin:20px 0;color:#00f2ff;}
+.price{font-size:36px;margin:20px 0;color:#00f2ff;font-weight:700;}
 footer{padding:30px;text-align:center;background:#111827;color:#777;margin-top:50px;}
+.contact-btn{margin-top:60px;}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">Sync</div>
+  <div class="logo">Sync Security</div>
   <nav>
-    <a href="#service">서비스</a>
-    <a href="#price">가격</a>
+    <a href="#price">Pricing</a>
   </nav>
 </header>
 
 <section class="hero">
-  <h1>Sync 메신저봇R 코드 판매</h1>
-  <p>강력한 기능 · 빠른 업데이트 · 안정적인 코드</p>
-  <button class="btn">지금 구매하기</button>
+  <h1>Advanced Security Solution</h1>
+  <button class="btn" onclick="location.href='#price'">View Pricing</button>
 </section>
 
-<!-- 왜 Sync Service인가 -->
-<section class="section" id="service">
-  <h2>왜 Sync Service인가?</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>⚡ 빠른 처리 속도</h3>
-      <p>최적화된 코드 구조로 지연 없는 응답 제공</p>
-    </div>
-    <div class="card">
-      <h3>🔒 안정성</h3>
-      <p>테스트 완료된 코드만 판매하여 오류 최소화</p>
-    </div>
-    <div class="card">
-      <h3>🔄 지속 업데이트</h3>
-      <p>최신 기능을 반영하여 지속적으로 개선</p>
-    </div>
-  </div>
-</section>
-
-<!-- 가격 안내 -->
 <section class="section" id="price">
-  <h2>가격 안내</h2>
+  <h2>Pricing</h2>
   <div class="cards">
 
     <div class="card">
       <h3>Basic</h3>
-      <div class="price">₩10,000</div>
-      <p>✔ 매크로 코드 제공</p>
-      <p>✔ 기본 자동 실행 기능</p>
-      <button class="btn">구매</button>
+      <div class="price">1.0</div>
     </div>
 
     <div class="card">
       <h3>Pro</h3>
-      <div class="price">₩30,000</div>
-      <p>✔ IP 기능 포함</p>
-      <p>✔ 고급 명령어 지원</p>
-      <button class="btn">구매</button>
+      <div class="price">3.0</div>
     </div>
 
     <div class="card">
       <h3>Premium</h3>
-      <div class="price">₩50,000</div>
-      <p>✔ 최신 업데이트된 모든 코드 제공</p>
-      <p>✔ 평생 업데이트 지원</p>
-      <button class="btn">구매</button>
+      <div class="price">5.0</div>
     </div>
 
   </div>
+
+  <div class="contact-btn">
+    <button class="btn" onclick="window.open('https://discord.gg/N8J6Kh8zd')">
+      구매문의
+    </button>
+  </div>
+
 </section>
 
 <footer>
-  © 2026 Sync. All rights reserved.
+  © 2026 Sync Security. All rights reserved.
 </footer>
 
 </body>
