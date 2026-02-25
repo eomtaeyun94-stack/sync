@@ -3,7 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>SYNC</title>
+
+<meta name="description" content="SYNC">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="SYNC">
+<meta property="og:description" content="SYNC">
+<meta property="og:site_name" content="SYNC">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SYNC">
+<meta name="twitter:description" content="SYNC">
+
+<link rel="icon" href="favicon.ico">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
@@ -56,10 +72,11 @@ body{
 }
 
 header{
-    font-size:30px;
+    font-size:32px;
     font-weight:700;
     margin-bottom:40px;
-    letter-spacing:2px;
+    letter-spacing:3px;
+    text-align:center;
     background:linear-gradient(90deg,#7c3aed,#3b82f6);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
@@ -146,9 +163,6 @@ button:hover{
 
 button:active{
     transform:scale(0.95);
-    box-shadow:
-        0 0 30px rgba(124,58,237,1),
-        0 0 60px rgba(59,130,246,0.8);
 }
 
 /* ===== 게시글 ===== */
@@ -177,28 +191,24 @@ button:active{
 
 <body>
 
-<!-- 로딩 -->
 <div id="loading">
     <div class="loader-ring"></div>
     <div class="percent" id="percent">0%</div>
 </div>
 
-<!-- 메인 -->
 <div id="main">
     <header>SYNC</header>
 
-    <!-- 사고 신고 -->
     <div class="card">
-        <h2>🚨 사고 신고 게시판</h2>
+        <h2>게시판</h2>
         <input type="text" id="title" placeholder="제목 입력">
         <textarea id="content" rows="3" placeholder="내용 입력"></textarea>
         <button onclick="addPost()">작성하기</button>
         <div id="postList"></div>
     </div>
 
-    <!-- 판매자 평점 -->
     <div class="card">
-        <h2>⭐ 판매자 평점</h2>
+        <h2>평점</h2>
         <div>
             <span class="star" onclick="rate(1)">★</span>
             <span class="star" onclick="rate(2)">★</span>
@@ -206,17 +216,7 @@ button:active{
             <span class="star" onclick="rate(4)">★</span>
             <span class="star" onclick="rate(5)">★</span>
         </div>
-        <p id="ratingText" style="margin-top:10px;opacity:0.6;">평점을 선택하세요</p>
-    </div>
-
-    <!-- 요즘 뜨는 카트 -->
-    <div class="card">
-        <h2>🔥 요즘 뜨는 카트</h2>
-        <ul style="line-height:1.8;opacity:0.8;">
-            <li>스피드 레전드 X</li>
-            <li>루나 플래시 GT</li>
-            <li>네온 블레이드</li>
-        </ul>
+        <p id="ratingText" style="margin-top:10px;opacity:0.6;">선택하세요</p>
     </div>
 </div>
 
