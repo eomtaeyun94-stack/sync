@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SYNC Astra</title>
+<title>SYNC</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
@@ -56,29 +56,34 @@ body{
 }
 
 header{
-    font-size:28px;
-    font-weight:600;
+    font-size:30px;
+    font-weight:700;
     margin-bottom:40px;
+    letter-spacing:2px;
     background:linear-gradient(90deg,#7c3aed,#3b82f6);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
 }
 
-/* 카드 공통 */
+/* ===== 카드 ===== */
 .card{
     background:rgba(255,255,255,0.05);
     backdrop-filter:blur(15px);
-    border:1px solid rgba(255,255,255,0.1);
+    border:1px solid rgba(124,58,237,0.3);
     padding:25px;
     border-radius:20px;
     margin-bottom:25px;
-    box-shadow:0 0 30px rgba(0,0,0,0.4);
+    box-shadow:
+        0 0 20px rgba(124,58,237,0.15),
+        0 0 40px rgba(0,0,0,0.4);
     transition:0.3s;
 }
 
 .card:hover{
     transform:translateY(-5px);
-    box-shadow:0 0 40px rgba(124,58,237,0.3);
+    box-shadow:
+        0 0 30px rgba(124,58,237,0.4),
+        0 0 60px rgba(59,130,246,0.3);
 }
 
 .card h2{
@@ -87,7 +92,7 @@ header{
     color:#a78bfa;
 }
 
-/* 입력창 */
+/* ===== 입력 ===== */
 input, textarea{
     width:100%;
     padding:12px;
@@ -99,37 +104,73 @@ input, textarea{
     outline:none;
 }
 
+/* ===== 글로우 버튼 ===== */
 button{
-    padding:10px 20px;
-    border:none;
-    border-radius:10px;
-    background:linear-gradient(90deg,#7c3aed,#3b82f6);
+    position:relative;
+    padding:12px 24px;
+    border-radius:12px;
+    border:1px solid rgba(124,58,237,0.6);
+    background:rgba(124,58,237,0.15);
     color:white;
     cursor:pointer;
-    transition:0.3s;
+    overflow:hidden;
+    transition:0.3s ease;
+    box-shadow:
+        0 0 10px rgba(124,58,237,0.4),
+        0 0 20px rgba(59,130,246,0.2);
 }
 
-button:hover{
+button::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:12px;
+    padding:1px;
+    background:linear-gradient(90deg,#7c3aed,#3b82f6);
+    -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
     opacity:0.8;
 }
 
-/* 게시글 */
+button:hover{
+    background:linear-gradient(90deg,#7c3aed,#3b82f6);
+    box-shadow:
+        0 0 20px rgba(124,58,237,0.8),
+        0 0 40px rgba(59,130,246,0.6),
+        0 0 80px rgba(124,58,237,0.4);
+    transform:translateY(-2px);
+}
+
+button:active{
+    transform:scale(0.95);
+    box-shadow:
+        0 0 30px rgba(124,58,237,1),
+        0 0 60px rgba(59,130,246,0.8);
+}
+
+/* ===== 게시글 ===== */
 .post{
     background:rgba(255,255,255,0.06);
     padding:12px;
     border-radius:10px;
     margin-top:10px;
+    border:1px solid rgba(255,255,255,0.08);
 }
 
-/* 별점 */
+/* ===== 별점 ===== */
 .star{
-    font-size:22px;
+    font-size:24px;
     cursor:pointer;
     color:#555;
+    transition:0.2s;
 }
 
 .star.active{
     color:#facc15;
+    text-shadow:0 0 10px #facc15;
 }
 </style>
 </head>
@@ -144,9 +185,9 @@ button:hover{
 
 <!-- 메인 -->
 <div id="main">
-    <header>SYNC Astra</header>
+    <header>SYNC</header>
 
-    <!-- 사고 신고 게시판 -->
+    <!-- 사고 신고 -->
     <div class="card">
         <h2>🚨 사고 신고 게시판</h2>
         <input type="text" id="title" placeholder="제목 입력">
@@ -172,15 +213,14 @@ button:hover{
     <div class="card">
         <h2>🔥 요즘 뜨는 카트</h2>
         <ul style="line-height:1.8;opacity:0.8;">
-            <li>Premium Security Shield</li>
-            <li>Real-time IP Monitor</li>
-            <li>Advanced Traffic Analyzer</li>
+            <li>스피드 레전드 X</li>
+            <li>루나 플래시 GT</li>
+            <li>네온 블레이드</li>
         </ul>
     </div>
 </div>
 
 <script>
-/* 로딩 2초 */
 let percent = document.getElementById("percent");
 let width = 0;
 
@@ -196,7 +236,6 @@ let interval = setInterval(()=>{
     }
 },100);
 
-/* 게시판 */
 function addPost(){
     let title = document.getElementById("title").value;
     let content = document.getElementById("content").value;
@@ -211,7 +250,6 @@ function addPost(){
     document.getElementById("content").value="";
 }
 
-/* 평점 */
 function rate(num){
     let stars=document.querySelectorAll(".star");
     stars.forEach((s,i)=>{
