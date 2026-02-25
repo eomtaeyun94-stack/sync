@@ -3,260 +3,276 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SYNC</title>
-
-<meta name="description" content="SYNC">
-
-<!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="SYNC">
-<meta property="og:description" content="SYNC">
-<meta property="og:site_name" content="SYNC">
-
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="SYNC">
-<meta name="twitter:description" content="SYNC">
-
-<link rel="icon" href="favicon.ico">
+<title>Sync</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-    background: radial-gradient(circle at top, #111827, #05070c 70%);
+    font-family:'Segoe UI',sans-serif;
+    background:#1c1c1f;
     color:white;
-    overflow-x:hidden;
-}
-
-/* ===== 로딩 ===== */
-#loading{
-    position:fixed;
-    width:100%;
-    height:100vh;
-    background:#05070c;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    z-index:9999;
-}
-
-.loader-ring{
-    width:130px;
-    height:130px;
-    border-radius:50%;
-    border:3px solid transparent;
-    border-top:3px solid #7c3aed;
-    border-right:3px solid #3b82f6;
-    animation:spin 1s linear infinite;
-    box-shadow:0 0 40px rgba(124,58,237,0.6);
-}
-
-@keyframes spin{
-    0%{transform:rotate(0deg);}
-    100%{transform:rotate(360deg);}
-}
-
-.percent{
-    margin-top:20px;
-    font-size:14px;
-    opacity:0.6;
-}
-
-/* ===== 메인 ===== */
-#main{
-    display:none;
-    padding:40px 10%;
+    min-height:100vh;
 }
 
 header{
-    font-size:32px;
-    font-weight:700;
-    margin-bottom:40px;
-    letter-spacing:3px;
-    text-align:center;
-    background:linear-gradient(90deg,#7c3aed,#3b82f6);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+    padding:30px 50px;
+    font-size:24px;
+    font-weight:600;
 }
 
-/* ===== 카드 ===== */
-.card{
-    background:rgba(255,255,255,0.05);
-    backdrop-filter:blur(15px);
-    border:1px solid rgba(124,58,237,0.3);
-    padding:25px;
-    border-radius:20px;
-    margin-bottom:25px;
-    box-shadow:
-        0 0 20px rgba(124,58,237,0.15),
-        0 0 40px rgba(0,0,0,0.4);
-    transition:0.3s;
+.search-box{
+    display:flex;
+    justify-content:center;
+    margin:40px 0;
 }
 
-.card:hover{
-    transform:translateY(-5px);
-    box-shadow:
-        0 0 30px rgba(124,58,237,0.4),
-        0 0 60px rgba(59,130,246,0.3);
-}
-
-.card h2{
-    margin-bottom:15px;
-    font-size:18px;
-    color:#a78bfa;
-}
-
-/* ===== 입력 ===== */
-input, textarea{
-    width:100%;
-    padding:12px;
-    margin-bottom:12px;
-    border:none;
-    border-radius:10px;
-    background:rgba(255,255,255,0.08);
+.search-box input{
+    width:450px;
+    padding:15px 20px;
+    border-radius:30px;
+    border:1px solid #8a2cff;
+    background:#252529;
     color:white;
     outline:none;
+    box-shadow:0 0 12px rgba(138,44,255,0.6);
 }
 
-/* ===== 글로우 버튼 ===== */
-button{
-    position:relative;
-    padding:12px 24px;
-    border-radius:12px;
-    border:1px solid rgba(124,58,237,0.6);
-    background:rgba(124,58,237,0.15);
-    color:white;
+.category{
+    display:flex;
+    justify-content:center;
+    gap:50px;
+    margin-bottom:30px;
+}
+
+.category button{
+    background:none;
+    border:none;
+    font-size:18px;
+    color:#bbb;
     cursor:pointer;
-    overflow:hidden;
-    transition:0.3s ease;
-    box-shadow:
-        0 0 10px rgba(124,58,237,0.4),
-        0 0 20px rgba(59,130,246,0.2);
+    white-space:nowrap;
 }
 
-button::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:12px;
-    padding:1px;
-    background:linear-gradient(90deg,#7c3aed,#3b82f6);
-    -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor;
-    mask-composite:exclude;
-    opacity:0.8;
+.category button.active,
+.category button:hover{
+    color:#c78cff;
 }
 
-button:hover{
-    background:linear-gradient(90deg,#7c3aed,#3b82f6);
-    box-shadow:
-        0 0 20px rgba(124,58,237,0.8),
-        0 0 40px rgba(59,130,246,0.6),
-        0 0 80px rgba(124,58,237,0.4);
-    transform:translateY(-2px);
+.board{
+    width:75%;
+    margin:auto;
+    background:#252529;
+    border-radius:20px;
+    padding:30px;
+    border:1px solid #8a2cff;
+    box-shadow:0 0 20px rgba(138,44,255,0.5);
+    min-height:150px;
 }
 
-button:active{
-    transform:scale(0.95);
-}
-
-/* ===== 게시글 ===== */
 .post{
-    background:rgba(255,255,255,0.06);
-    padding:12px;
-    border-radius:10px;
-    margin-top:10px;
-    border:1px solid rgba(255,255,255,0.08);
+    padding:18px 0;
+    border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
-/* ===== 별점 ===== */
-.star{
-    font-size:24px;
+.post:last-child{border:none;}
+
+.no-result{
+    text-align:center;
+    padding:40px 0;
+    color:#aaa;
+}
+
+.write-btn{
+    position:fixed;
+    bottom:40px;
+    right:40px;
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    border:1px solid #8a2cff;
+    background:#252529;
     cursor:pointer;
-    color:#555;
-    transition:0.2s;
+    box-shadow:0 0 20px rgba(138,44,255,0.8);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:28px;
 }
 
-.star.active{
-    color:#facc15;
-    text-shadow:0 0 10px #facc15;
+.write-btn span{
+    display:inline-block;
+    transform:scaleX(-1);
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+}
+
+.modal-content{
+    position:relative;
+    background:#252529;
+    padding:30px;
+    border-radius:20px;
+    width:400px;
+    border:1px solid #8a2cff;
+    box-shadow:0 0 20px rgba(138,44,255,0.5);
+}
+
+.close-btn{
+    position:absolute;
+    top:15px;
+    right:15px;
+    background:none;
+    border:none;
+    color:#c78cff;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.modal-content select,
+.modal-content input,
+.modal-content textarea{
+    width:100%;
+    margin-bottom:12px;
+    padding:10px;
+    border-radius:10px;
+    border:1px solid #8a2cff;
+    background:#1c1c1f;
+    color:white;
+}
+
+.modal-content button.submit-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#8a2cff;
+    cursor:pointer;
+    color:white;
 }
 </style>
 </head>
-
 <body>
 
-<div id="loading">
-    <div class="loader-ring"></div>
-    <div class="percent" id="percent">0%</div>
+<header>Sync</header>
+
+<div class="search-box">
+    <input type="text" id="searchInput" placeholder="#제목 검색">
 </div>
 
-<div id="main">
-    <header>SYNC</header>
+<div class="category">
+    <button class="active" onclick="filterCategory('자유', event)">자유</button>
+    <button onclick="filterCategory('거래', event)">거래</button>
+    <button onclick="filterCategory('후기', event)">후기</button>
+</div>
 
-    <div class="card">
-        <h2>게시판</h2>
-        <input type="text" id="title" placeholder="제목 입력">
-        <textarea id="content" rows="3" placeholder="내용 입력"></textarea>
-        <button onclick="addPost()">작성하기</button>
-        <div id="postList"></div>
-    </div>
+<div class="board" id="board"></div>
 
-    <div class="card">
-        <h2>평점</h2>
-        <div>
-            <span class="star" onclick="rate(1)">★</span>
-            <span class="star" onclick="rate(2)">★</span>
-            <span class="star" onclick="rate(3)">★</span>
-            <span class="star" onclick="rate(4)">★</span>
-            <span class="star" onclick="rate(5)">★</span>
-        </div>
-        <p id="ratingText" style="margin-top:10px;opacity:0.6;">선택하세요</p>
+<button class="write-btn" onclick="openModal()">
+    <span>✎</span>
+</button>
+
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <button class="close-btn" onclick="closeModal()">✕</button>
+
+        <select id="category">
+            <option value="자유">자유</option>
+            <option value="거래">거래</option>
+            <option value="후기">후기</option>
+        </select>
+
+        <input type="text" id="title" placeholder="제목">
+        <textarea id="content" rows="4" placeholder="내용"></textarea>
+        <button class="submit-btn" onclick="addPost()">작성</button>
     </div>
 </div>
 
 <script>
-let percent = document.getElementById("percent");
-let width = 0;
+let posts=[];
+let currentCategory="자유";
+let isSearchMode=false;
 
-let interval = setInterval(()=>{
-    width += 5;
-    percent.innerText = width + "%";
-    if(width >= 100){
-        clearInterval(interval);
-        setTimeout(()=>{
-            document.getElementById("loading").style.display="none";
-            document.getElementById("main").style.display="block";
-        },200);
+function renderPosts(list=null){
+    const board=document.getElementById("board");
+    board.innerHTML="";
+
+    let displayList;
+
+    if(isSearchMode){
+        displayList=list || [];
+        if(displayList.length===0){
+            board.innerHTML=`<div class="no-result">찾으시는 매물은 현재 없습니다</div>`;
+            return;
+        }
+    }else{
+        displayList=posts.filter(p=>p.category===currentCategory);
     }
-},100);
+
+    displayList.forEach(p=>{
+        board.innerHTML+=`
+        <div class="post">
+            <h3>[${p.category}] ${p.title}</h3>
+            <p>${p.content}</p>
+        </div>`;
+    });
+}
 
 function addPost(){
-    let title = document.getElementById("title").value;
-    let content = document.getElementById("content").value;
-    if(title===""||content==="") return;
-
-    let post=document.createElement("div");
-    post.className="post";
-    post.innerHTML="<strong>"+title+"</strong><br>"+content;
-    document.getElementById("postList").prepend(post);
-
-    document.getElementById("title").value="";
-    document.getElementById("content").value="";
+    const category=document.getElementById("category").value;
+    const title=document.getElementById("title").value;
+    const content=document.getElementById("content").value;
+    if(!title||!content)return;
+    posts.unshift({category,title,content});
+    closeModal();
+    isSearchMode=false;
+    renderPosts();
 }
 
-function rate(num){
-    let stars=document.querySelectorAll(".star");
-    stars.forEach((s,i)=>{
-        s.classList.toggle("active", i<num);
-    });
-    document.getElementById("ratingText").innerText=num+"점 선택됨";
+function filterCategory(cat, e){
+    currentCategory=cat;
+    isSearchMode=false;
+    document.querySelectorAll(".category button")
+        .forEach(b=>b.classList.remove("active"));
+    e.target.classList.add("active");
+    renderPosts();
 }
+
+function openModal(){
+    document.getElementById("modal").style.display="flex";
+}
+
+function closeModal(){
+    document.getElementById("modal").style.display="none";
+}
+
+/* 검색 */
+document.getElementById("searchInput").addEventListener("keypress",function(e){
+    if(e.key==="Enter"){
+        let keyword=this.value.trim();
+        if(keyword.startsWith("#")){
+            keyword=keyword.substring(1);
+        }
+        keyword=keyword.toLowerCase();
+
+        isSearchMode=true;
+
+        const result=posts.filter(p =>
+            p.title.toLowerCase().includes(keyword) ||
+            p.content.toLowerCase().includes(keyword)
+        );
+
+        renderPosts(result);
+    }
+});
+
+renderPosts();
 </script>
 
 </body>
