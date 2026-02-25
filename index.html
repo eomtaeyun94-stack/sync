@@ -3,195 +3,222 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SYNC</title>
+<title>SYNC Astra</title>
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 
 body{
-  background:#05070c;
-  color:white;
+    background: radial-gradient(circle at top, #111827, #05070c 70%);
+    color:white;
+    overflow-x:hidden;
 }
 
-.section{
-  padding:80px 20px;
-  max-width:900px;
-  margin:auto;
+/* ===== 로딩 ===== */
+#loading{
+    position:fixed;
+    width:100%;
+    height:100vh;
+    background:#05070c;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:9999;
 }
 
-h1{
-  font-size:42px;
-  font-weight:600;
-  margin-bottom:20px;
+.loader-ring{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    border:3px solid transparent;
+    border-top:3px solid #7c3aed;
+    border-right:3px solid #3b82f6;
+    animation:spin 1s linear infinite;
+    box-shadow:0 0 40px rgba(124,58,237,0.6);
 }
 
-.subtitle{
-  color:#9ca3af;
-  font-size:18px;
-  margin-bottom:40px;
+@keyframes spin{
+    0%{transform:rotate(0deg);}
+    100%{transform:rotate(360deg);}
 }
 
+.percent{
+    margin-top:20px;
+    font-size:14px;
+    opacity:0.6;
+}
+
+/* ===== 메인 ===== */
+#main{
+    display:none;
+    padding:40px 10%;
+}
+
+header{
+    font-size:28px;
+    font-weight:600;
+    margin-bottom:40px;
+    background:linear-gradient(90deg,#7c3aed,#3b82f6);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* 카드 공통 */
 .card{
-  background:rgba(255,255,255,0.03);
-  border:1px solid rgba(255,255,255,0.08);
-  padding:30px;
-  border-radius:20px;
-  margin-bottom:25px;
-  transition:0.3s;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.1);
+    padding:25px;
+    border-radius:20px;
+    margin-bottom:25px;
+    box-shadow:0 0 30px rgba(0,0,0,0.4);
+    transition:0.3s;
 }
 
 .card:hover{
-  border-color:#38bdf8;
-  transform:translateY(-5px);
+    transform:translateY(-5px);
+    box-shadow:0 0 40px rgba(124,58,237,0.3);
 }
 
-.card-title{
-  font-size:28px;
-  margin-bottom:10px;
-  color:#38bdf8;
+.card h2{
+    margin-bottom:15px;
+    font-size:18px;
+    color:#a78bfa;
 }
 
-.card-desc{
-  color:#9ca3af;
-  font-size:15px;
+/* 입력창 */
+input, textarea{
+    width:100%;
+    padding:12px;
+    margin-bottom:12px;
+    border:none;
+    border-radius:10px;
+    background:rgba(255,255,255,0.08);
+    color:white;
+    outline:none;
 }
 
-/* 버튼 */
-.btn{
-  display:inline-block;
-  margin-top:30px;
-  padding:16px 30px;
-  border-radius:14px;
-  text-decoration:none;
-  font-weight:600;
-  font-size:16px;
-  transition:0.3s;
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(90deg,#7c3aed,#3b82f6);
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-.primary{
-  background:#38bdf8;
-  color:black;
+button:hover{
+    opacity:0.8;
 }
 
-.primary:hover{
-  background:#0ea5e9;
-  transform:translateY(-3px);
-}
-
-.outline{
-  border:1px solid rgba(255,255,255,0.2);
-  color:white;
-}
-
-.outline:hover{
-  border-color:#38bdf8;
-  color:#38bdf8;
-}
-
-/* 게시판 */
+/* 게시글 */
 .post{
-  margin-top:15px;
-  padding:15px;
-  border-radius:12px;
-  background:#0f172a;
-  border:1px solid rgba(255,255,255,0.05);
+    background:rgba(255,255,255,0.06);
+    padding:12px;
+    border-radius:10px;
+    margin-top:10px;
 }
 
-.small{
-  font-size:12px;
-  color:#6b7280;
-  margin-top:5px;
+/* 별점 */
+.star{
+    font-size:22px;
+    cursor:pointer;
+    color:#555;
+}
+
+.star.active{
+    color:#facc15;
 }
 </style>
 </head>
+
 <body>
 
-<!-- HERO -->
-<div class="section">
-  <h1>SYNC</h1>
-  <div class="subtitle">
-    Secure Community Platform for KartRider Rush+
-  </div>
-
-  <a href="#board" class="btn primary">Explore Community</a>
-  <a href="#trending" class="btn outline">Trending Karts</a>
+<!-- 로딩 -->
+<div id="loading">
+    <div class="loader-ring"></div>
+    <div class="percent" id="percent">0%</div>
 </div>
 
-<!-- 게시판 -->
-<div class="section" id="board">
-  <h1>Community Reports</h1>
-  <div class="subtitle">
-    Share incidents and protect other players.
-  </div>
+<!-- 메인 -->
+<div id="main">
+    <header>SYNC Astra</header>
 
-  <div class="card">
-    <div class="card-title">🚨 사고 신고</div>
-    <div class="card-desc">
-      사기 및 의심 거래 사례를 공유하세요.
+    <!-- 사고 신고 게시판 -->
+    <div class="card">
+        <h2>🚨 사고 신고 게시판</h2>
+        <input type="text" id="title" placeholder="제목 입력">
+        <textarea id="content" rows="3" placeholder="내용 입력"></textarea>
+        <button onclick="addPost()">작성하기</button>
+        <div id="postList"></div>
     </div>
 
-    <div id="reportList"></div>
-  </div>
-</div>
-
-<!-- 판매자 평점 -->
-<div class="section">
-  <h1>Seller Ratings</h1>
-  <div class="subtitle">
-    Transparent reputation system.
-  </div>
-
-  <div class="card">
-    <div class="card-title">⭐ 판매자 평가</div>
-    <div class="card-desc">
-      거래 후기를 기반으로 신뢰도를 확인하세요.
+    <!-- 판매자 평점 -->
+    <div class="card">
+        <h2>⭐ 판매자 평점</h2>
+        <div>
+            <span class="star" onclick="rate(1)">★</span>
+            <span class="star" onclick="rate(2)">★</span>
+            <span class="star" onclick="rate(3)">★</span>
+            <span class="star" onclick="rate(4)">★</span>
+            <span class="star" onclick="rate(5)">★</span>
+        </div>
+        <p id="ratingText" style="margin-top:10px;opacity:0.6;">평점을 선택하세요</p>
     </div>
 
-    <div id="reviewList"></div>
-  </div>
-</div>
-
-<!-- 트렌딩 -->
-<div class="section" id="trending">
-  <h1>Trending Karts</h1>
-  <div class="subtitle">
-    Current competitive meta.
-  </div>
-
-  <div class="card">
-    <div class="card-title">🔥 플라즈마 GT</div>
-    <div class="card-desc">사용률 32%</div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">⚡ 흑기사 X</div>
-    <div class="card-desc">사용률 28%</div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">🚀 백기사 Z</div>
-    <div class="card-desc">사용률 19%</div>
-  </div>
+    <!-- 요즘 뜨는 카트 -->
+    <div class="card">
+        <h2>🔥 요즘 뜨는 카트</h2>
+        <ul style="line-height:1.8;opacity:0.8;">
+            <li>Premium Security Shield</li>
+            <li>Real-time IP Monitor</li>
+            <li>Advanced Traffic Analyzer</li>
+        </ul>
+    </div>
 </div>
 
 <script>
-// 예시 데이터 자동 표시
-document.getElementById("reportList").innerHTML = `
-<div class="post">
-  의심 거래 발생
-  <div class="small">작성자: user01</div>
-</div>`;
+/* 로딩 2초 */
+let percent = document.getElementById("percent");
+let width = 0;
 
-document.getElementById("reviewList").innerHTML = `
-<div class="post">
-  판매자 AAA - ★★★★★
-  <div class="small">매우 친절하고 빠른 거래</div>
-</div>`;
+let interval = setInterval(()=>{
+    width += 5;
+    percent.innerText = width + "%";
+    if(width >= 100){
+        clearInterval(interval);
+        setTimeout(()=>{
+            document.getElementById("loading").style.display="none";
+            document.getElementById("main").style.display="block";
+        },200);
+    }
+},100);
+
+/* 게시판 */
+function addPost(){
+    let title = document.getElementById("title").value;
+    let content = document.getElementById("content").value;
+    if(title===""||content==="") return;
+
+    let post=document.createElement("div");
+    post.className="post";
+    post.innerHTML="<strong>"+title+"</strong><br>"+content;
+    document.getElementById("postList").prepend(post);
+
+    document.getElementById("title").value="";
+    document.getElementById("content").value="";
+}
+
+/* 평점 */
+function rate(num){
+    let stars=document.querySelectorAll(".star");
+    stars.forEach((s,i)=>{
+        s.classList.toggle("active", i<num);
+    });
+    document.getElementById("ratingText").innerText=num+"점 선택됨";
+}
 </script>
 
 </body>
