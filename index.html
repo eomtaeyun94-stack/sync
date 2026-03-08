@@ -51,7 +51,6 @@ header{
     font-size:18px;
     color:#bbb;
     cursor:pointer;
-    white-space:nowrap;
 }
 
 .category button.active,
@@ -101,7 +100,6 @@ header{
 }
 
 .write-btn span{
-    display:inline-block;
     transform:scaleX(-1);
 }
 
@@ -157,25 +155,24 @@ header{
     color:white;
 }
 
-/* 스폰서 영역 */
-.sponsor{
+/* 스폰서 & 추천 영역 */
+.section{
     margin-top:60px;
-    padding:40px;
     text-align:center;
 }
 
-.sponsor h2{
+.section h2{
     margin-bottom:20px;
     color:#c78cff;
 }
 
-.sponsor-buttons{
+.link-buttons{
     display:flex;
     justify-content:center;
     gap:30px;
 }
 
-.sponsor-buttons button{
+.link-buttons button{
     padding:12px 30px;
     border-radius:25px;
     border:1px solid #8a2cff;
@@ -186,7 +183,7 @@ header{
     transition:0.2s;
 }
 
-.sponsor-buttons button:hover{
+.link-buttons button:hover{
     box-shadow:0 0 20px rgba(138,44,255,0.9);
     transform:scale(1.05);
 }
@@ -209,13 +206,19 @@ header{
 <div class="board" id="board"></div>
 
 <!-- 스폰서 -->
-<div class="sponsor">
+<div class="section">
 <h2>스폰서</h2>
-
-<div class="sponsor-buttons">
+<div class="link-buttons">
 <button onclick="window.open('https://open.kakao.com/o/pmj0IAVh','_blank')">한강</button>
-
 <button onclick="window.open('https://open.kakao.com/o/pxc6ceZh','_blank')">현</button>
+</div>
+</div>
+
+<!-- 추천 거래자 -->
+<div class="section">
+<h2>추천 거래자</h2>
+<div class="link-buttons">
+<button onclick="window.open('https://open.kakao.com/o/s08IrNfi','_blank')">민진</button>
 </div>
 </div>
 
@@ -248,43 +251,33 @@ let currentCategory="자유";
 let isSearchMode=false;
 
 function renderPosts(list=null){
-
 const board=document.getElementById("board");
 board.innerHTML="";
 
 let displayList;
 
 if(isSearchMode){
-
 displayList=list||[];
 
 if(displayList.length===0){
-
 board.innerHTML=`<div class="no-result">찾으시는 매물은 현재 없습니다</div>`;
 return;
-
 }
 
 }else{
-
 displayList=posts.filter(p=>p.category===currentCategory);
-
 }
 
 displayList.forEach(p=>{
-
 board.innerHTML+=`
 <div class="post">
 <h3>[${p.category}] ${p.title}</h3>
 <p>${p.content}</p>
 </div>`;
-
 });
-
 }
 
 function addPost(){
-
 const category=document.getElementById("category").value;
 const title=document.getElementById("title").value;
 const content=document.getElementById("content").value;
@@ -294,44 +287,31 @@ if(!title||!content)return;
 posts.unshift({category,title,content});
 
 closeModal();
-
 isSearchMode=false;
-
 renderPosts();
-
 }
 
 function filterCategory(cat,e){
-
 currentCategory=cat;
-
 isSearchMode=false;
 
 document.querySelectorAll(".category button")
 .forEach(b=>b.classList.remove("active"));
 
 e.target.classList.add("active");
-
 renderPosts();
-
 }
 
 function openModal(){
-
 document.getElementById("modal").style.display="flex";
-
 }
 
 function closeModal(){
-
 document.getElementById("modal").style.display="none";
-
 }
 
 document.getElementById("searchInput").addEventListener("keypress",function(e){
-
 if(e.key==="Enter"){
-
 let keyword=this.value.trim();
 
 if(keyword.startsWith("#")){
@@ -342,15 +322,13 @@ keyword=keyword.toLowerCase();
 
 isSearchMode=true;
 
-const result=posts.filter(p=>
-p.title.toLowerCase().includes(keyword)||
+const result=posts.filter(p =>
+p.title.toLowerCase().includes(keyword) ||
 p.content.toLowerCase().includes(keyword)
 );
 
 renderPosts(result);
-
 }
-
 });
 
 renderPosts();
