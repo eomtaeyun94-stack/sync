@@ -156,6 +156,40 @@ header{
     cursor:pointer;
     color:white;
 }
+
+/* 스폰서 영역 */
+.sponsor{
+    margin-top:60px;
+    padding:40px;
+    text-align:center;
+}
+
+.sponsor h2{
+    margin-bottom:20px;
+    color:#c78cff;
+}
+
+.sponsor-buttons{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+}
+
+.sponsor-buttons button{
+    padding:12px 30px;
+    border-radius:25px;
+    border:1px solid #8a2cff;
+    background:#252529;
+    color:white;
+    cursor:pointer;
+    box-shadow:0 0 12px rgba(138,44,255,0.5);
+    transition:0.2s;
+}
+
+.sponsor-buttons button:hover{
+    box-shadow:0 0 20px rgba(138,44,255,0.9);
+    transform:scale(1.05);
+}
 </style>
 </head>
 <body>
@@ -163,35 +197,49 @@ header{
 <header>Sync</header>
 
 <div class="search-box">
-    <input type="text" id="searchInput" placeholder="#제목 검색">
+<input type="text" id="searchInput" placeholder="#제목 검색">
 </div>
 
 <div class="category">
-    <button class="active" onclick="filterCategory('자유', event)">자유</button>
-    <button onclick="filterCategory('거래', event)">거래</button>
-    <button onclick="filterCategory('후기', event)">후기</button>
+<button class="active" onclick="filterCategory('자유', event)">자유</button>
+<button onclick="filterCategory('거래', event)">거래</button>
+<button onclick="filterCategory('후기', event)">후기</button>
 </div>
 
 <div class="board" id="board"></div>
 
+<!-- 스폰서 -->
+<div class="sponsor">
+<h2>스폰서</h2>
+
+<div class="sponsor-buttons">
+<button onclick="window.open('https://open.kakao.com/o/pmj0IAVh','_blank')">한강</button>
+
+<button onclick="window.open('https://open.kakao.com/o/pxc6ceZh','_blank')">현</button>
+</div>
+</div>
+
 <button class="write-btn" onclick="openModal()">
-    <span>✎</span>
+<span>✎</span>
 </button>
 
 <div class="modal" id="modal">
-    <div class="modal-content">
-        <button class="close-btn" onclick="closeModal()">✕</button>
+<div class="modal-content">
 
-        <select id="category">
-            <option value="자유">자유</option>
-            <option value="거래">거래</option>
-            <option value="후기">후기</option>
-        </select>
+<button class="close-btn" onclick="closeModal()">✕</button>
 
-        <input type="text" id="title" placeholder="제목">
-        <textarea id="content" rows="4" placeholder="내용"></textarea>
-        <button class="submit-btn" onclick="addPost()">작성</button>
-    </div>
+<select id="category">
+<option value="자유">자유</option>
+<option value="거래">거래</option>
+<option value="후기">후기</option>
+</select>
+
+<input type="text" id="title" placeholder="제목">
+<textarea id="content" rows="4" placeholder="내용"></textarea>
+
+<button class="submit-btn" onclick="addPost()">작성</button>
+
+</div>
 </div>
 
 <script>
@@ -200,76 +248,109 @@ let currentCategory="자유";
 let isSearchMode=false;
 
 function renderPosts(list=null){
-    const board=document.getElementById("board");
-    board.innerHTML="";
 
-    let displayList;
+const board=document.getElementById("board");
+board.innerHTML="";
 
-    if(isSearchMode){
-        displayList=list || [];
-        if(displayList.length===0){
-            board.innerHTML=`<div class="no-result">찾으시는 매물은 현재 없습니다</div>`;
-            return;
-        }
-    }else{
-        displayList=posts.filter(p=>p.category===currentCategory);
-    }
+let displayList;
 
-    displayList.forEach(p=>{
-        board.innerHTML+=`
-        <div class="post">
-            <h3>[${p.category}] ${p.title}</h3>
-            <p>${p.content}</p>
-        </div>`;
-    });
+if(isSearchMode){
+
+displayList=list||[];
+
+if(displayList.length===0){
+
+board.innerHTML=`<div class="no-result">찾으시는 매물은 현재 없습니다</div>`;
+return;
+
+}
+
+}else{
+
+displayList=posts.filter(p=>p.category===currentCategory);
+
+}
+
+displayList.forEach(p=>{
+
+board.innerHTML+=`
+<div class="post">
+<h3>[${p.category}] ${p.title}</h3>
+<p>${p.content}</p>
+</div>`;
+
+});
+
 }
 
 function addPost(){
-    const category=document.getElementById("category").value;
-    const title=document.getElementById("title").value;
-    const content=document.getElementById("content").value;
-    if(!title||!content)return;
-    posts.unshift({category,title,content});
-    closeModal();
-    isSearchMode=false;
-    renderPosts();
+
+const category=document.getElementById("category").value;
+const title=document.getElementById("title").value;
+const content=document.getElementById("content").value;
+
+if(!title||!content)return;
+
+posts.unshift({category,title,content});
+
+closeModal();
+
+isSearchMode=false;
+
+renderPosts();
+
 }
 
-function filterCategory(cat, e){
-    currentCategory=cat;
-    isSearchMode=false;
-    document.querySelectorAll(".category button")
-        .forEach(b=>b.classList.remove("active"));
-    e.target.classList.add("active");
-    renderPosts();
+function filterCategory(cat,e){
+
+currentCategory=cat;
+
+isSearchMode=false;
+
+document.querySelectorAll(".category button")
+.forEach(b=>b.classList.remove("active"));
+
+e.target.classList.add("active");
+
+renderPosts();
+
 }
 
 function openModal(){
-    document.getElementById("modal").style.display="flex";
+
+document.getElementById("modal").style.display="flex";
+
 }
 
 function closeModal(){
-    document.getElementById("modal").style.display="none";
+
+document.getElementById("modal").style.display="none";
+
 }
 
-/* 검색 */
 document.getElementById("searchInput").addEventListener("keypress",function(e){
-    if(e.key==="Enter"){
-        let keyword=this.value.trim();
-        if(keyword.startsWith("#")){
-            keyword=keyword.substring(1);
-        }
-        keyword=keyword.toLowerCase();
 
-        isSearchMode=true;
+if(e.key==="Enter"){
 
-        const result=posts.filter(p =>
-            p.title.toLowerCase().includes(keyword) ||
-            p.content.toLowerCase().includes(keyword)
-        );
+let keyword=this.value.trim();
 
-        renderPosts(result);
-    }
+if(keyword.startsWith("#")){
+keyword=keyword.substring(1);
+}
+
+keyword=keyword.toLowerCase();
+
+isSearchMode=true;
+
+const result=posts.filter(p=>
+p.title.toLowerCase().includes(keyword)||
+p.content.toLowerCase().includes(keyword)
+);
+
+renderPosts(result);
+
+}
+
 });
 
 renderPosts();
